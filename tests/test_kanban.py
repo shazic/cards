@@ -46,3 +46,11 @@ def test_get_nonexistent_board():
     assert response.status_code == 404
     error_data = response.json()
     assert 'detail' in error_data
+
+def test_add_column_to_nonexistent_board():
+    # Try to add a column to a board that doesn't exist
+    nonexistent_board_id = 'nonexistent-board-id'
+    response = client.post(f'/api/v1/boards/{nonexistent_board_id}/columns', json={'name': 'To Do'})
+    assert response.status_code == 404
+    error_data = response.json()
+    assert 'detail' in error_data

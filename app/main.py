@@ -27,6 +27,10 @@ def get_board(board_id: str):
 
 @router.post("/api/v1/boards/{board_id}/columns", status_code=status.HTTP_201_CREATED)
 def add_column(board_id: str, payload: dict):
+    # Check if board exists
+    if board_id not in boards:
+        return JSONResponse(status_code=404, content={"detail": "Board not found"})
+    
     name = payload.get("name")
     column_id = str(uuid.uuid4())
     return JSONResponse(status_code=201, content={"id": column_id, "name": name})
